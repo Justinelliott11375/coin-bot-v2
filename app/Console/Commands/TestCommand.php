@@ -15,14 +15,14 @@ class TestCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'app:test-command';
+    protected $signature = 'app:get-prices-and-calculate-rsi';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'get price data from polygon API, and calculate RSI if possible';
 
     /**
      * Execute the console command.
@@ -36,7 +36,7 @@ class TestCommand extends Command
         foreach (Coin::all() as $coin) {
 
             $response = $rest->crypto->PreviousClose()->get($coin->formattedTickerName());
-            // TODO: check response is valid, and if close price we're about to access exists
+            // TODO: check response is valid, and if close price we're about to access exists(there is a request limit)
 
             $price = $response['results'][0]['close'];
 
@@ -46,7 +46,7 @@ class TestCommand extends Command
 
             if (!$existingRecord) {
                 $coinPrice = new CoinPrice([
-                    'date' => $today,
+                    'date'  => $today,
                     'price' => $price,
                 ]);
                 $coin->prices()->save($coinPrice);
@@ -56,8 +56,11 @@ class TestCommand extends Command
             if ($coin->hasEnoughDataToCalculateRSI()) {
                 $rsi = $coin->calculateRSI();
                 $coin->rsis()->updateOrCreate([
-                    'rsi' => $rsi,
-                    'interval' => 'day',
+                    'interval'          => 'day',
+                    'coin_id'           => $coin->id,
+                ], [
+                    'rsi'               => $rsi,
+                    'date_calculated'   => $today,
                 ]);
             }
         }

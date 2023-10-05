@@ -17,6 +17,7 @@ return new class extends Migration
             $table->float('rsi', 15, 5);
             $table->string('interval', 50)->comment('interval used to calculate RSI(past 14 days, weeks, etc)');
             $table->foreignIdFor(Coin::class);
+            $table->date('date_calculated');
             $table->timestamps();
         });
     }

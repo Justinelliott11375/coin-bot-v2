@@ -12,7 +12,7 @@ class RSI extends Model
 
     protected $table = 'rsis';
 
-    protected $fillable = ['rsi', 'interval'];
+    protected $fillable = ['rsi', 'interval', 'date_calculated'];
 
     public function coin(): BelongsTo
     {

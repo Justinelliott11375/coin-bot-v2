@@ -19,7 +19,7 @@ In its current form, this app:
 
 Seeding: Run `php artisan migrate:fresh --seed`. This should create 3 individual coins and two weeks worth of randomized prices
 
-Running the command: After seeding, you can run `php artisan app:get-prices-and-calculate-rsi` to request the previous day's close price of every coin in the coins table and calculate and store rsi for each. These values can be found in the `rsis` table. These values are upserted to the table with each command run.
+Running the command: After seeding, you can run `php artisan app:get-prices-and-calculate-rsi` to request the previous day's close price of every coin in the coins table and calculate and store rsi for each. These values can be found in the `rsis` table. These values are upserted to the table with each command run. NOTE: you _will_ need a polygon API key to run this. You can either generate one on their site fairly easily, or ask me for mine.
 
 
 ## License

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use PolygonIO\Rest\Rest;
 
-class TestCommand extends Command
+class GetPricesAndCalculateRSI extends Command
 {
     /**
      * The name and signature of the console command.
